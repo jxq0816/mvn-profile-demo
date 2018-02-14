@@ -1,4 +1,5 @@
-# springmvc-min
+# mvn-profile
 
-springmvc最简化配置教程
-http://blog.csdn.net/jxq0816/article/details/76084911
+
+Maven配置本地环境和线上环境：http://blog.csdn.net/jxq0816/article/details/79325799
+
