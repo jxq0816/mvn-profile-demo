@@ -2,20 +2,29 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.week7i.share</groupId>
-  <artifactId>springmvc-mini</artifactId>
+  <artifactId>mvn-profile</artifactId>
   <packaging>war</packaging>
   <version>1.0-SNAPSHOT</version>
   <name>springmvc-mini Maven Webapp</name>
   <url>http://maven.apache.org</url>
   <properties>
+    <commons-lang3.version>3.3.2</commons-lang3.version>
+    <commons-io.version>2.4</commons-io.version>
+    <guava.version>17.0</guava.version>
+    <junit.version>4.11</junit.version>
     <spring.version>4.3.6.RELEASE</spring.version>
   </properties>
   <dependencies>
-
+    <!-- GENERAL UTILS begin -->
     <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-context</artifactId>
-      <version>${spring.version}</version>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>${commons-lang3.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>${commons-io.version}</version>
     </dependency>
 
     <dependency>
@@ -24,14 +33,58 @@
       <version>${spring.version}</version>
     </dependency>
 
-    <!--JSP Standard Tag Library，JSP标准标签库-->
+    <!-- google java lib -->
     <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>jstl</artifactId>
-      <version>1.2</version>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>${guava.version}</version>
     </dependency>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+
   </dependencies>
+
   <build>
-    <finalName>springmvc-mini</finalName>
+    <finalName>mvn-profile</finalName>
+    <resources>
+      <!--加载环境变量的目录-->
+      <resource>
+        <directory>src/main/resources/${env}</directory>
+      </resource>
+      <!--加载其他配置文件-->
+      <resource>
+        <directory>src/main/resources</directory>
+        <excludes>
+          <exclude>local/*</exclude>
+          <exclude>online/*</exclude>
+        </excludes>
+      </resource>
+
+    </resources>
   </build>
+
+  <profiles>
+    <!--开发环境-->
+    <profile>
+      <id>local</id>
+      <properties>
+        <env>local</env>
+      </properties>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+    </profile>
+    <!--生产环境-->
+    <profile>
+      <id>online</id>
+      <properties>
+        <env>online</env>
+      </properties>
+    </profile>
+  </profiles>
 </project>
